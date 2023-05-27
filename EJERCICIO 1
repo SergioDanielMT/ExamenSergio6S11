@@ -1,0 +1,29 @@
+/* TABLA DE ALUMNOS */
+create table TESOLUMNOS(
+idp number (20) primary key not null,
+matricula number (20) unique,
+nombrea varchar (20) not null,
+appa varchar (20) not null,
+apma varchar (20) not null,
+carreraa varchar (15),
+constraint ch_carreraa check(carreraa in('ISC', 'TICS', 'AUTOMOTRISES', 'GASTRO', 'AMBIENTAL', 'INDUSTRIAL', 'ER', 'CONTADOR', 'ADMIN')),
+grupo nvarchar2 (20),
+semestre number (9),
+constraint ch_semestre check(semestre in(1, 2, 3, 4, 5, 6, 7, 8, 9)),
+edificio varchar (9),
+constraint ch_edificio check(edificio in('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I')),
+promedio number (10));
+
+SELECT * FROM tesolumnos;
+drop table tesolumnos;
+
+/* PROCEDIMIENTO ALMACENADO DE ALUMNOS */
+create or replace procedure inserta
+(a_id_alum in number default 0, a_matricula in number ,a_nombre in varchar default 'Nombre',
+a_apellido_p in varchar default 'Apellido Paterno', a_apellido_m in varchar default 'Apellido Materno',
+a_carrera in varchar default 'ISC' ,a_grupo in nvarchar2 default 'Grupo' ,a_semestre in number default 1,a_edificio in varchar default 'A',
+a_promedio in number default 0)
+as
+begin
+insert into tesolumnos values (a_id_alum ,a_matricula, a_nombre, a_apellido_p, a_apellido_m ,a_carrera ,a_grupo , a_semestre,a_edificio, a_promedio);
+end;
