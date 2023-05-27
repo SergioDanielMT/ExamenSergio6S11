@@ -1,0 +1,56 @@
+/*---------------------------------- EJERCICIO 3 -------------------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION becas2(valu2 NUMBER)
+RETURN VARCHAR2
+IS
+  beca2 VARCHAR2(100);
+  por2 NUMBER;
+BEGIN
+  SELECT promedio INTO por2
+  FROM tesolumnos
+  WHERE idp = valu2;
+
+  IF por2 >= 80 AND por2 < 85 THEN
+     beca2 := 'Descuento del 20%';
+  ELSIF por2 >= 85 AND por2 < 94 THEN
+     beca2 := 'Descuento del 50%';
+  ELSIF por2 = 100 THEN
+     beca2 := 'Descuento del 100%';
+  ELSE
+     beca2 := 'No apto para beca';
+  END IF;
+
+  RETURN beca2;
+END;
+
+
+SELECT matricula, nombrea || appa || apma as nombre, becas2(idp) as becas FROM tesolumnos ;
+
+
+CREATE OR REPLACE PROCEDURE VerificarAptitudBeca
+IS
+  v_promedio NUMBER;
+BEGIN
+
+  FOR rec IN (SELECT idp, AVG(promedio) AS promedioo
+              FROM tesolumnos
+              GROUP BY idp)
+  LOOP
+    -- Asigna el promedio a una variable
+    v_promedio := rec.promedioo;
+    
+    IF v_promedio >= 80 AND v_promedio < 85 THEN
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' Tiene el Descuento del 20%.');
+    ELSIF v_promedio >= 85 AND v_promedio < 94 THEN
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' Tiene el Descuento del 50%.');
+    ELSIF v_promedio >= 100 THEN
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' Tiene el Descuento del 100%.');  
+    ELSE  
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' NO ES APTO PARA LA BECA.');
+    END IF;
+    
+  END LOOP;
+END;
+
+SET SERVEROUTPUT ON;
+execute VerificarAptitudBeca;
