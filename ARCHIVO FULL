@@ -1,0 +1,470 @@
+/* TABLA DE ALUMNOS */
+create table TESOLUMNOS(
+idp number (20) primary key not null,
+matricula number (20) unique,
+nombrea varchar (20) not null,
+appa varchar (20) not null,
+apma varchar (20) not null,
+carreraa varchar (15),
+constraint ch_carreraa check(carreraa in('ISC', 'TICS', 'AUTOMOTRISES', 'GASTRO', 'AMBIENTAL', 'INDUSTRIAL', 'ER', 'CONTADOR', 'ADMIN')),
+grupo nvarchar2 (20),
+semestre number (9),
+constraint ch_semestre check(semestre in(1, 2, 3, 4, 5, 6, 7, 8, 9)),
+edificio varchar (9),
+constraint ch_edificio check(edificio in('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I')),
+promedio number (10));
+
+SELECT * FROM tesolumnos;
+drop table tesolumnos;
+
+/* PROCEDIMIENTO ALMACENADO DE ALUMNOS */
+create or replace procedure inserta
+(a_id_alum in number default 0, a_matricula in number ,a_nombre in varchar default 'Nombre',
+a_apellido_p in varchar default 'Apellido Paterno', a_apellido_m in varchar default 'Apellido Materno',
+a_carrera in varchar default 'ISC' ,a_grupo in nvarchar2 default 'Grupo' ,a_semestre in number default 1,a_edificio in varchar default 'A',
+a_promedio in number default 0)
+as
+begin
+insert into tesolumnos values (a_id_alum ,a_matricula, a_nombre, a_apellido_p, a_apellido_m ,a_carrera ,a_grupo , a_semestre,a_edificio, a_promedio);
+end;
+
+---------ALUMNOS GASTRO
+execute inserta(1,190020057,'Kenia Daniela','Montes','Espinosa','GASTRO','8G12',8, 'C', 86);
+execute inserta(2,190020065,'Nora Lizeth','Vazquez','Corona','GASTRO','8G12',8, 'C', 89);
+execute inserta(3,190020069,'Alexis','Chavez','Quiñones','GASTRO','8G12',8, 'C', 83);
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+create table sistemas(
+idsi number(20) primary key not null,
+matriculasi number(20),
+aliasi varchar (50),
+gruposi nvarchar2(10),
+edificiosi varchar(9)
+);
+SELECT * FROM SISTEMAS;
+drop table sistemas;
+
+create table TICSS(
+idt number(20) primary key not null,
+matriculat number(20),
+aliast varchar (50),
+grupot nvarchar2(10),
+edificiot varchar(9)
+);
+SELECT * FROM ticss;
+drop table ticss;
+
+create table automo(
+idau number(20) primary key not null,
+matriculau number(20),
+aliasau varchar (50),
+grupoau nvarchar2(10),
+edificioau varchar(9)
+);
+SELECT * FROM automo;
+drop table automo;
+
+create table gas(
+idg number(20) primary key not null,
+matriculag number(20),
+aliasg varchar (50),
+grupog nvarchar2(10),
+edificiog varchar(9)
+);
+SELECT * FROM gas;
+drop table gas;
+
+create table ambi(
+idam number(20) primary key not null,
+matriculam number(20),
+aliasam varchar (50),
+grupoam nvarchar2(10),
+edificioam varchar(9)
+);
+SELECT * FROM ambi;
+drop table ambi;
+
+create table indu(
+idi number(20) primary key not null,
+matriculai number(20),
+aliasii varchar (50),
+grupoi nvarchar2(10),
+edificioi varchar(9)
+);
+SELECT * FROM indu;
+drop table indu;
+
+create table ene(
+iden number(20) primary key not null,
+matriculaen number(20),
+aliasen varchar (50),
+grupoen nvarchar2(10),
+edificioen varchar(9)
+);
+SELECT * FROM ene;
+drop table ene;
+
+create table conta(
+idon number(20) primary key not null,
+matriculaon number(20),
+aliason varchar (50),
+grupon nvarchar2(10),
+edificion varchar(9)
+);
+SELECT * FROM conta;
+drop table conta;
+
+create table adm(
+idad number(20) primary key not null,
+matriculad number(20),
+aliasad varchar (50),
+grupoad nvarchar2(10),
+edificioad varchar(9)
+);
+SELECT * FROM adm;
+drop table adm;
+
+
+ execute ta_carrera;
+ 
+create or replace procedure ta_carrera
+as
+begin
+    insert into sistemas(idsi, matriculasi, aliasi, gruposi, edificiosi)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='ISC';
+    
+   insert into ticss(idt, matriculat, aliast, grupot, edificiot)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='TICS';
+    
+    insert into automo(idau, matriculau, aliasau, grupoau, edificioau)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='AUTOMOTRISES';
+    
+    insert into gas(idg, matriculag, aliasg, grupog, edificiog)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='GASTRO';
+    
+    insert into ambi(idam, matriculam, aliasam, grupoam, edificioam)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='AMBIENTAL';
+    
+    insert into indu(idi, matriculai, aliasii, grupoi, edificioi)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='INDUSTRIAL';
+    
+    insert into ene(iden, matriculaen, aliasen, grupoen, edificioen)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='ER';
+    
+    insert into conta(idon, matriculaon, aliason, grupon, edificion)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='CONTADOR';
+    
+    insert into adm(idad, matriculad, aliasad, grupoad, edificioad)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='ADMIN';
+    
+        
+end;
+
+select nombrea, carreraa, semestre from tesolumnos where semestre = 4;
+
+SELECT S.aliasi, T.aliast, A.aliasau , G.aliasg, AM.aliasam, I.aliasii, E.aliasen, C.aliason, AD.aliasad
+FROM sistemas S, ticss T, automo A, gas G, ambi AM, indu I, ene E,conta  C, adm AD 
+WHERE A.edificiosi = 'A'
+  AND A.edificiosi = 'B'
+  AND A.edificiosi = 'C'
+  AND A.edificiosi = 'D'
+  AND A.edificiosi = 'E'
+  AND A.edificiosi = 'F'
+  AND A.edificiosi = 'G'
+  AND A.edificiosi = 'H'
+  AND A.edificiosi = 'I';
+
+SELECT A.nombrea as profesor, E.aliasen, A.semestre
+FROM tesolumnos A
+JOIN ene E ON A.edificio = E.edificioen
+WHERE A.grupo like '2%';
+
+SELECT E.grupoen, E.aliasen, A.semestre
+FROM tesolumnos A
+JOIN ene E ON A.grupo = E.grupoen
+WHERE A.grupo like '2%';
+
+select * from tesolumnos where grupo like '2%';
+
+SELECT E.grupoen, E.aliasen, A.semestre
+FROM tesolumnos A
+JOIN ene E ON A.grupo = E.grupoen 
+join ambi am on A.grupo = am.grupoam
+WHERE A.semestre = 2;
+
+select * from ene join automo on grupoen like '2%' and grupoau like '2%' join ticss on grupot like '2%'; 
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+Tabla "Alumnos":
+
+id_alumno (clave primaria)
+nombre_alumno
+semestre_alumno
+
+Tabla "Carreras":
+
+id_carrera (clave primaria)
+nombre_carrera
+Tabla "Alumnos_Carreras":
+
+id_alumno (clave foránea referenciando a Alumnos)
+id_carrera (clave foránea referenciando a Carreras)
+
+SELECT A.nombre_alumno, A.semestre_alumno, C.nombre_carrera
+FROM Alumnos A
+INNER JOIN Alumnos_Carreras AC ON A.id_alumno = AC.id_alumno
+INNER JOIN Carreras C ON AC.id_carrera = C.id_carrera
+WHERE A.semestre_alumno = (SELECT semestre_alumno FROM Alumnos WHERE id_alumno = A.id_alumno)
+
+SELECT A.aliasad, A.grpoad, C.nombre_carrera
+FROM adm A
+INNER JOIN Alumnos_Carreras AC ON A.id_alumno = AC.id_alumno
+INNER JOIN Carreras C ON AC.id_carrera = C.id_carrera
+WHERE A.semestre_alumno = (SELECT semestre_alumno FROM Alumnos WHERE id_alumno = A.id_alumno)
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* TABLA DE MAESTROS */
+create table prof(
+idp number (20) primary key not null,
+nombrep varchar (20) not null,
+appp varchar (20) not null,
+apmp varchar (20) not null,
+carrera varchar (15),
+constraint ch_carrera check(carrera in('ISC', 'TICS', 'AUTOMOTRISES', 'GASTRO', 'AMBIENTAL', 'INDUSTRIAL', 'ER', 'CONTADOR', 'ADMIN')),
+nomclass varchar (30),
+grupo nvarchar2 (20));
+
+SELECT * FROM PROF;
+drop table prof;
+
+/* PROCEDIMIENTO ALMACENADO DE PROFESORES */
+create or replace procedure insertp
+(s_id in number default 0, s_nombre in varchar default 'Nombre', s_apellido in varchar default 'Apellido',
+s_apellidom in varchar default 'ApellidoM', s_carrera in varchar default  'INDUSTRIAL',
+s_clase in varchar default 'Clase', s_grupo in nvarchar2 default 'Grupo')
+as
+begin
+    insert into PROF values(s_id, s_nombre, s_apellido, s_apellidom, s_carrera, s_clase, s_grupo);
+end;
+
+/* INSERCIONES DE LOS PROFESORES */
+
+EXECUTE insertp (1,'ALBERTO','DORADO','MENDEZ','INDUSTRIAL','MATEMATICAS','2I12');
+EXECUTE insertp (2,'JOSE','FLORES','FLORES','INDUSTRIAL','AUTOMATAS','8I11'||' 8I12');
+
+
+
+
+
+
+
+
+create table sistemasp(
+idsip number(20) primary key not null,
+aliasip varchar (50),
+gruposip nvarchar2(10),
+compadenp varchar(30)
+);
+SELECT * FROM SISTEMASp;
+drop table sistemasp;
+
+create table TICSSp(
+idtp number(20) primary key not null,
+aliastp varchar (50),
+grupotp nvarchar2(10),
+compadentp varchar(30)
+);
+SELECT * FROM ticssp;
+drop table ticssp;
+
+create table automop(
+idaup number(20) primary key not null,
+aliasaup varchar (50),
+grupoaup nvarchar2(10),
+compadenaup varchar(30)
+);
+SELECT * FROM automop;
+drop table automop;
+
+create table gasp(
+idgp number(20) primary key not null,
+aliasgp varchar (50),
+grupogp nvarchar2(10),
+compadengp varchar(30)
+);
+SELECT * FROM gasp;
+drop table gasp;
+
+create table ambip(
+idamp number(20) primary key not null,
+aliasamp varchar (50),
+grupoamp nvarchar2(10),
+compadenamp varchar(30)
+);
+SELECT * FROM ambip;
+drop table ambip;
+
+create table indup(
+idi number(20) primary key not null,
+aliasiip varchar (50),
+grupoip nvarchar2(10),
+compadennp varchar(30)
+);
+SELECT * FROM indup;
+drop table indup;
+
+create table enep(
+idenp number(20) primary key not null,
+aliasenp varchar (50),
+grupoenp nvarchar2(10),
+compadenep varchar(30)
+);
+SELECT * FROM enep;
+drop table enep;
+
+create table contap(
+idonp number(20) primary key not null,
+aliasonp varchar (50),
+gruponp nvarchar2(10),
+compadencp varchar(30)
+);
+SELECT * FROM contap;
+drop table contap;
+
+create table admp(
+idadp number(20) primary key not null,
+aliasadp varchar (50),
+grupoadp nvarchar2(10),
+compadenadp varchar(30)
+);
+SELECT * FROM admp;
+drop table admp;
+
+
+ execute ta_carrera;
+ 
+create or replace procedure ta_carrerap
+as
+begin
+    insert into sistemasp(idsip, aliasip, gruposip, compadenp)
+    select idp,  nombrep || appp || apmp,grupo || nomclass,  carrera
+    from prof
+    where carrera='ISC';
+    
+   insert into ticssp(idtp, aliastp, grupotp, compadentp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='TICS';
+    
+    insert into automop(idaup, aliasaup, grupoaup, compadenaup)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='AUTOMOTRISES';
+    
+    insert into gasp(idgp, aliasgp, grupogp, compadengp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='GASTRO';
+    
+    insert into ambip(idamp, aliasamp, grupoamp, compadenamp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='AMBIENTAL';
+    
+    insert into indup(idi,  aliasiip, grupoip, compadennp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='INDUSTRIAL';
+    
+    insert into enep(idenp,  aliasenp, grupoenp, compadenep)
+    select idp,  nombrep || appp || apmp,grupo || nomclass,  carrera
+    from prof
+    where carrera='ER';
+    
+    insert into contap(idonp,  aliasonp, gruponp, compadencp)
+    select idp,  nombrep || appp || apmp, grupo, grupo || nomclass,  carrera
+    from prof
+    where carrera='CONTADOR';
+    
+    insert into admp(idadp,  aliasadp, grupoadp, compadendp)
+    select idp,  nombrep || appp || apmp, grupo,grupo || nomclass,  carrera
+    from prof
+    where carrera='ADMIN';
+    
+        
+end;
+
+/*---------------------------------- EJERCICIO 3 -------------------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION becas2(valu2 NUMBER)
+RETURN VARCHAR2
+IS
+  beca2 VARCHAR2(100);
+  por2 NUMBER;
+BEGIN
+  SELECT promedio INTO por2
+  FROM tesolumnos
+  WHERE idp = valu2;
+
+  IF por2 >= 80 AND por2 < 85 THEN
+     beca2 := 'Descuento del 20%';
+  ELSIF por2 >= 85 AND por2 < 94 THEN
+     beca2 := 'Descuento del 50%';
+  ELSIF por2 = 100 THEN
+     beca2 := 'Descuento del 100%';
+  ELSE
+     beca2 := 'No apto para beca';
+  END IF;
+
+  RETURN beca2;
+END;
+
+
+SELECT matricula, nombrea || appa || apma as nombre, becas2(idp) as becas FROM tesolumnos ;
+
+
+CREATE OR REPLACE PROCEDURE VerificarAptitudBeca
+IS
+  v_promedio NUMBER;
+BEGIN
+
+  FOR rec IN (SELECT idp, AVG(promedio) AS promedioo
+              FROM tesolumnos
+              GROUP BY idp)
+  LOOP
+    -- Asigna el promedio a una variable
+    v_promedio := rec.promedioo;
+    
+    IF v_promedio >= 80 AND v_promedio < 85 THEN
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' Tiene el Descuento del 20%.');
+    ELSIF v_promedio >= 85 AND v_promedio < 94 THEN
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' Tiene el Descuento del 50%.');
+    ELSIF v_promedio >= 100 THEN
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' Tiene el Descuento del 100%.');  
+    ELSE  
+      DBMS_OUTPUT.PUT_LINE('El alumno con ID ' || rec.idp || ' NO ES APTO PARA LA BECA.');
+    END IF;
+    
+  END LOOP;
+END;
+
+SET SERVEROUTPUT ON;
+execute VerificarAptitudBeca;
