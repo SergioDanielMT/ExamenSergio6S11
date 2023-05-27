@@ -27,3 +27,185 @@ as
 begin
 insert into tesolumnos values (a_id_alum ,a_matricula, a_nombre, a_apellido_p, a_apellido_m ,a_carrera ,a_grupo , a_semestre,a_edificio, a_promedio);
 end;
+
+execute inserta(11,185010032,'Zaira Elisa','Castillo','Mejia','ER','8E11',8,'I',75);
+execute inserta(1,190020057,'Kenia Daniela','Montes','Espinosa','GASTRO','8G12',8, 'C', 86);
+
+
+create table sistemas(
+idsi number(20) primary key not null,
+matriculasi number(20),
+aliasi varchar (50),
+gruposi nvarchar2(10),
+edificiosi varchar(9)
+);
+SELECT * FROM SISTEMAS;
+drop table sistemas;
+
+create table TICSS(
+idt number(20) primary key not null,
+matriculat number(20),
+aliast varchar (50),
+grupot nvarchar2(10),
+edificiot varchar(9)
+);
+SELECT * FROM ticss;
+drop table ticss;
+
+create table automo(
+idau number(20) primary key not null,
+matriculau number(20),
+aliasau varchar (50),
+grupoau nvarchar2(10),
+edificioau varchar(9)
+);
+SELECT * FROM automo;
+drop table automo;
+
+create table gas(
+idg number(20) primary key not null,
+matriculag number(20),
+aliasg varchar (50),
+grupog nvarchar2(10),
+edificiog varchar(9)
+);
+SELECT * FROM gas;
+drop table gas;
+
+create table ambi(
+idam number(20) primary key not null,
+matriculam number(20),
+aliasam varchar (50),
+grupoam nvarchar2(10),
+edificioam varchar(9)
+);
+SELECT * FROM ambi;
+drop table ambi;
+
+create table indu(
+idi number(20) primary key not null,
+matriculai number(20),
+aliasii varchar (50),
+grupoi nvarchar2(10),
+edificioi varchar(9)
+);
+SELECT * FROM indu;
+drop table indu;
+
+create table ene(
+iden number(20) primary key not null,
+matriculaen number(20),
+aliasen varchar (50),
+grupoen nvarchar2(10),
+edificioen varchar(9)
+);
+SELECT * FROM ene;
+drop table ene;
+
+create table conta(
+idon number(20) primary key not null,
+matriculaon number(20),
+aliason varchar (50),
+grupon nvarchar2(10),
+edificion varchar(9)
+);
+SELECT * FROM conta;
+drop table conta;
+
+create table adm(
+idad number(20) primary key not null,
+matriculad number(20),
+aliasad varchar (50),
+grupoad nvarchar2(10),
+edificioad varchar(9)
+);
+SELECT * FROM adm;
+drop table adm;
+
+
+ execute ta_carrera;
+ 
+create or replace procedure ta_carrera
+as
+begin
+    insert into sistemas(idsi, matriculasi, aliasi, gruposi, edificiosi)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='ISC';
+    
+   insert into ticss(idt, matriculat, aliast, grupot, edificiot)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='TICS';
+    
+    insert into automo(idau, matriculau, aliasau, grupoau, edificioau)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='AUTOMOTRISES';
+    
+    insert into gas(idg, matriculag, aliasg, grupog, edificiog)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='GASTRO';
+    
+    insert into ambi(idam, matriculam, aliasam, grupoam, edificioam)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='AMBIENTAL';
+    
+    insert into indu(idi, matriculai, aliasii, grupoi, edificioi)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='INDUSTRIAL';
+    
+    insert into ene(iden, matriculaen, aliasen, grupoen, edificioen)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='ER';
+    
+    insert into conta(idon, matriculaon, aliason, grupon, edificion)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='CONTADOR';
+    
+    insert into adm(idad, matriculad, aliasad, grupoad, edificioad)
+    select idp, matricula, nombrea || appa || apma, grupo, edificio
+    from tesolumnos
+    where carreraa='ADMIN';
+    
+        
+end;
+
+select nombrea, carreraa, semestre from tesolumnos where semestre = 4;
+
+SELECT S.aliasi, T.aliast, A.aliasau , G.aliasg, AM.aliasam, I.aliasii, E.aliasen, C.aliason, AD.aliasad
+FROM sistemas S, ticss T, automo A, gas G, ambi AM, indu I, ene E,conta  C, adm AD 
+WHERE A.edificiosi = 'A'
+  AND A.edificiosi = 'B'
+  AND A.edificiosi = 'C'
+  AND A.edificiosi = 'D'
+  AND A.edificiosi = 'E'
+  AND A.edificiosi = 'F'
+  AND A.edificiosi = 'G'
+  AND A.edificiosi = 'H'
+  AND A.edificiosi = 'I';
+
+SELECT A.nombrea as profesor, E.aliasen, A.semestre
+FROM tesolumnos A
+JOIN ene E ON A.edificio = E.edificioen
+WHERE A.grupo like '2%';
+
+SELECT E.grupoen, E.aliasen, A.semestre
+FROM tesolumnos A
+JOIN ene E ON A.grupo = E.grupoen
+WHERE A.grupo like '2%';
+
+select * from tesolumnos where grupo like '2%';
+
+SELECT E.grupoen, E.aliasen, A.semestre
+FROM tesolumnos A
+JOIN ene E ON A.grupo = E.grupoen 
+join ambi am on A.grupo = am.grupoam
+WHERE A.semestre = 2;
+
+select * from ene join automo on grupoen like '2%' and grupoau like '2%' join ticss on grupot like '2%'; 
