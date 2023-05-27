@@ -1,0 +1,195 @@
+/* TABLA DE MAESTROS */
+create table prof(
+idp number (20) primary key not null,
+nombrep varchar (20) not null,
+appp varchar (20) not null,
+apmp varchar (20) not null,
+carrera varchar (15),
+constraint ch_carrera check(carrera in('ISC', 'TICS', 'AUTOMOTRISES', 'GASTRO', 'AMBIENTAL', 'INDUSTRIAL', 'ER', 'CONTADOR', 'ADMIN')),
+nomclass varchar (30),
+grupo nvarchar2 (20));
+
+SELECT * FROM PROF;
+drop table prof;
+
+/* PROCEDIMIENTO ALMACENADO DE PROFESORES */
+create or replace procedure insertp
+(s_id in number default 0, s_nombre in varchar default 'Nombre', s_apellido in varchar default 'Apellido',
+s_apellidom in varchar default 'ApellidoM', s_carrera in varchar default  'INDUSTRIAL',
+s_clase in varchar default 'Clase', s_grupo in nvarchar2 default 'Grupo')
+as
+begin
+    insert into PROF values(s_id, s_nombre, s_apellido, s_apellidom, s_carrera, s_clase, s_grupo);
+end;
+
+/* INSERCIONES DE LOS PROFESORES */
+
+EXECUTE insertp (1,'ALBERTO','DORADO','MENDEZ','INDUSTRIAL','MATEMATICAS','2I12');
+EXECUTE insertp (2,'JOSE','FLORES','FLORES','INDUSTRIAL','AUTOMATAS','8I11'||' 8I12');
+EXECUTE insertp (3,'MAYRA','ORTIZ','GRACIDA','INDUSTRIAL','ESTUDIO TRABAJO','4I11'||' 4I11'||' 4I12');
+EXECUTE insertp (4,'MAGALY','GONZALEZ','MOTA','ISC','CALCULO D','1S11'||' 2S12'||' 4S12');
+EXECUTE insertp (5,'GUSTAVO MOISES ','ROMERO','GONZALEZ','ISC','SO','5S11'||' 6S11'||' 6S12');
+EXECUTE insertp (6,'FRANCISCO RAUL','SALVAOR','GINEZ','ISC','REDES','6S11'||'6S12');
+EXECUTE insertp (7,'FERNANDO','SALGADO','CRUZ','ADMIN','TALLER ADMIN','2AD22');
+EXECUTE insertp (8,'JANETT','GARCIA','SANCHEZ','ADMIN','INVESTIGACION','2AD22'||' 2AD21');
+EXECUTE insertp (9,'ENRIQUE','LIMON','CARRILLA','ADMIN','TALLER INV','2AD22'||' 2AD21');
+EXECUTE insertp (10,'JULIO CESAR','MUÑOZ','PERES','ER','ALGEBRA','2E11');
+EXECUTE insertp (11,'DANIEL','MARTINEZ','CARBAJAL','ER','ELECTROMAG','2E11');
+EXECUTE insertp (12,'VICTOR','FUENTES','OLIVARES','ER','CIRCUITOS','4E11');
+EXECUTE insertp (13,'MIRIAM','MESA','LOYOLA','AMBIENTAL','HIGIENE','5A11'||' 5A12');
+EXECUTE insertp (14,'JOSE','MEZA','MARTINEZ','AMBIENTAL','FUNDAMENTOS','4A11'||'4A12'||' 4A21');
+EXECUTE insertp (15,'MENDRANO','CABRERA','CARRILLO','AMBIENTAL','ALGEBRA','2A11'||' 2A12');
+EXECUTE insertp (16,'PEDRO ABEL','ROJAS','RIVERA','TICS','ESTRUCTURAS Y OD','3T11');
+EXECUTE insertp (17,'NAYELY BEATRIZ','GONZALEZ','CONTRERAS','TICS','ADMIN GENERAL','3T11');
+EXECUTE insertp (18,'JOSE LUIS','VILLAREAL','LOPEZ','TICS','ELECTRISIDAD','3T11');
+EXECUTE insertp (19,'ADRIANA','ORTEGA','REYES','AUTOMOTRISES','CALCULO','4SA11');
+EXECUTE insertp (20,'BENITO','LOPEZ','RAZO','AUTOMOTRISES','DIFERENCIAL','5SA11'||' 5SA12');
+EXECUTE insertp (21,'ALICIA','MENDOZA','GARDUÑO','AUTOMOTRISES','CIRCUITOS','5SA12');
+EXECUTE insertp (22,'ZHARAHI','CASTAÑO','HERNANDEZ','CONTADOR','CALCULO','6C11');
+EXECUTE insertp (23,'OMAR','GARCIA','JIMENEZ','CONTADOR','ESTADISTICA','3C12');
+EXECUTE insertp (24,'ROBERTO','LOPEZ','CASTRO','CONTADOR','TUTORIA','4C11');
+EXECUTE insertp (25,'ESTHELA','MARTINEZ','JUAREZ','GASTRO','POTABILIZACION','6G11');
+EXECUTE insertp (26,'EDUARDO','CORDBA','ARAGON','GASTRO','COCINA','6G12');
+EXECUTE insertp (27,'VICTOR','DURNGO','MORALES','GASTRO','EVALUACION','6G21');
+EXECUTE insertp (28,'VICTOR','DURNGO','MORALES','GASTRO','EVALUACION'||'adminis','6G21');
+
+
+
+
+
+
+
+create table sistemasp(
+idsip number(20) primary key not null,
+aliasip varchar (50),
+gruposip nvarchar2(10),
+compadenp varchar(30)
+);
+SELECT * FROM SISTEMASp;
+drop table sistemasp;
+
+create table TICSSp(
+idtp number(20) primary key not null,
+aliastp varchar (50),
+grupotp nvarchar2(10),
+compadentp varchar(30)
+);
+SELECT * FROM ticssp;
+drop table ticssp;
+
+create table automop(
+idaup number(20) primary key not null,
+aliasaup varchar (50),
+grupoaup nvarchar2(10),
+compadenaup varchar(30)
+);
+SELECT * FROM automop;
+drop table automop;
+
+create table gasp(
+idgp number(20) primary key not null,
+aliasgp varchar (50),
+grupogp nvarchar2(10),
+compadengp varchar(30)
+);
+SELECT * FROM gasp;
+drop table gasp;
+
+create table ambip(
+idamp number(20) primary key not null,
+aliasamp varchar (50),
+grupoamp nvarchar2(10),
+compadenamp varchar(30)
+);
+SELECT * FROM ambip;
+drop table ambip;
+
+create table indup(
+idi number(20) primary key not null,
+aliasiip varchar (50),
+grupoip nvarchar2(10),
+compadennp varchar(30)
+);
+SELECT * FROM indup;
+drop table indup;
+
+create table enep(
+idenp number(20) primary key not null,
+aliasenp varchar (50),
+grupoenp nvarchar2(10),
+compadenep varchar(30)
+);
+SELECT * FROM enep;
+drop table enep;
+
+create table contap(
+idonp number(20) primary key not null,
+aliasonp varchar (50),
+gruponp nvarchar2(10),
+compadencp varchar(30)
+);
+SELECT * FROM contap;
+drop table contap;
+
+create table admp(
+idadp number(20) primary key not null,
+aliasadp varchar (50),
+grupoadp nvarchar2(10),
+compadenadp varchar(30)
+);
+SELECT * FROM admp;
+drop table admp;
+
+
+ execute ta_carrera;
+ 
+create or replace procedure ta_carrerap
+as
+begin
+    insert into sistemasp(idsip, aliasip, gruposip, compadenp)
+    select idp,  nombrep || appp || apmp,grupo || nomclass,  carrera
+    from prof
+    where carrera='ISC';
+    
+   insert into ticssp(idtp, aliastp, grupotp, compadentp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='TICS';
+    
+    insert into automop(idaup, aliasaup, grupoaup, compadenaup)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='AUTOMOTRISES';
+    
+    insert into gasp(idgp, aliasgp, grupogp, compadengp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='GASTRO';
+    
+    insert into ambip(idamp, aliasamp, grupoamp, compadenamp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='AMBIENTAL';
+    
+    insert into indup(idi,  aliasiip, grupoip, compadennp)
+    select idp,  nombrep || appp || apmp, grupo || nomclass,  carrera
+    from prof
+    where carrera='INDUSTRIAL';
+    
+    insert into enep(idenp,  aliasenp, grupoenp, compadenep)
+    select idp,  nombrep || appp || apmp,grupo || nomclass,  carrera
+    from prof
+    where carrera='ER';
+    
+    insert into contap(idonp,  aliasonp, gruponp, compadencp)
+    select idp,  nombrep || appp || apmp, grupo, grupo || nomclass,  carrera
+    from prof
+    where carrera='CONTADOR';
+    
+    insert into admp(idadp,  aliasadp, grupoadp, compadendp)
+    select idp,  nombrep || appp || apmp, grupo,grupo || nomclass,  carrera
+    from prof
+    where carrera='ADMIN';
+    
+        
+end;
